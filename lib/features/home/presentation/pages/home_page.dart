@@ -31,6 +31,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
+    super.initState();
+
     var initialzationSettingsAndroid =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettings =
@@ -57,7 +59,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ));
       }
-      super.initState();
     });
   }
 
