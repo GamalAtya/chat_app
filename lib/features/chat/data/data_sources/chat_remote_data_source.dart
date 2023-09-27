@@ -35,7 +35,7 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
       final chatRef = await fireStore
           .collection(AppConstants.chatsCollection).doc(chatId).set(
           oldChat.toJson());
-      await SendAppNotifications.sendNotificationToTopic(sender.uid!, "You Have New Message", msg.content);
+      await SendAppNotifications.sendNotificationToTopic(receiver.uid!, "You Have New Message", msg.content);
       return chatId;
     } else {
       final Chat? chatRoom = await isThereOldChatBetweenUsers(sender, receiver);
@@ -45,14 +45,14 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
         final chatRef = await fireStore
             .collection(AppConstants.chatsCollection).doc(chatRoom.chatId).set(
             oldChat.toJson());
-        await SendAppNotifications.sendNotificationToTopic(sender.uid!, "You Have New Message", msg.content);
+        await SendAppNotifications.sendNotificationToTopic(receiver.uid!, "You Have New Message", msg.content);
         return Future.value(chatRoom.chatId);
       } else {
         final chat = ChatModel(users: [sender, receiver], messages: [msg]);
         final chatRef = await fireStore
             .collection(AppConstants.chatsCollection)
             .add(chat.toJson());
-        await SendAppNotifications.sendNotificationToTopic(sender.uid!, "You Have New Message", msg.content);
+        await SendAppNotifications.sendNotificationToTopic(receiver.uid!, "You Have New Message", msg.content);
         return Future.value(chatRef.id);
       }
     }
